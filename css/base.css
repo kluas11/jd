@@ -1,0 +1,18 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+li{
+	list-style: none;
+}
+a {
+	text-decoration: none;
+  font-size: 12px;
+	color: #666;
+}
+ b,i,em{
+	font-style: normal;
+}
+a:hover{
+	color:#C81623;
+}
