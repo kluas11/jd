@@ -99,34 +99,6 @@ $('.fs_logo').mouseenter(function () {
 
     clearInterval(timeclock);
 })
-//  菜单经过显示菜单
-$('.menus_list li').hover(function () {
-    var index =$(this).index();
-    $(this).addClass('active').siblings().removeClass('active');
-    $('.menus .image').show().find('li').eq(index).css('display','block');
-
-},function () {
-    $(this).removeClass('active')
-    $('.menus .image li').css('display','none');
-    $('.menus .image').hide()
-
-})
-$('.menus .image li').hover(function () {
-    var lidex=$(this).index();
-    $(this).show();
-    $('.menus .image').show()
-    $('.menus_list li').eq(lidex).addClass('active').siblings().removeClass('active')
-
-},function () {
-    $(this).hide()
-    $('.menus_list li').removeClass('active');
-    $('.menus .image').hide()
-})
-
-
-
-
-
 //箭头点击切换图片
 $('.fs_arrow').click(function () {
     if($(this).attr('id')=='arrowright'){
@@ -166,17 +138,50 @@ function clock() {
 
 
 
+//  菜单经过显示菜单
+$('.menus_list li').hover(function () {
+    var index =$(this).index();
+    $(this).addClass('active').siblings().removeClass('active');
+    $('.menus .image').show().find('li').eq(index).css('display','block');
+
+},function () {
+    $(this).removeClass('active')
+    $('.menus .image li').css('display','none');
+    $('.menus .image').hide()
+
+})
+$('.menus .image li').hover(function () {
+    var lidex=$(this).index();
+    $(this).show();
+    $('.menus .image').show()
+    $('.menus_list li').eq(lidex).addClass('active').siblings().removeClass('active')
+
+},function () {
+    $(this).hide()
+    $('.menus_list li').removeClass('active');
+    $('.menus .image').hide()
+})
+
+
+
+
+
+
+
+
+
+
  function selet(obj1,obj2) {
-    obj1.mouseover(function () {
+    obj1.mouseenter(function () {
         $(this).addClass('xian').siblings().show();
     })
-     obj1.mouseout(function () {
+     obj1.mouseleave(function () {
          $(this).removeClass('xian').siblings().hide();
      })
-    obj2.mouseover(function () {
+    obj2.mouseenter(function () {
         $(this).show().siblings().addClass('xian');
     })
-     obj2.mouseout(function () {
+     obj2.mouseleave(function () {
          $(this).hide().siblings().removeClass('xian');
      })
 
@@ -185,6 +190,16 @@ function clock() {
 selet($('.jd_down'),$('.down_layer'));
 selet($('.client_ser'),$('.client_down'));
 
+
+//选中
+$("#t_nav .down_list .item a").click(function () {
+    $(this).addClass('selected').parent().siblings().find('a').removeClass('selected')
+    // 附上文本
+$(".address_box .address span").text($(this).text());
+    window.location.reload();
+
+})
+
 //中部工具栏
 
 $('#right_toolbar div').mouseover(function () {
@@ -192,6 +207,7 @@ $('#right_toolbar div').mouseover(function () {
 })
 $('#right_toolbar div').mouseout(function () {
     $(this).removeClass('toolbar_hover')
+
 })
 
 
@@ -343,10 +359,10 @@ $('a[href*=#],area[href*=#]').click(function () {
                          }
                  }
          });
-//scroll为0  没有过渡效果
-// $("#scroll_navbar .na").click(function(){
-//     $('body,html').animate({scrollTop:0},500);
-// })
+// scroll为0  先设置空链接
+$("#scroll_navbar .nav_list .top").click(function(){
+    $('html,body').animate({scrollTop:0},1000);
+})
 
 
 
@@ -460,6 +476,40 @@ $('.r_box .r_listbox li').mouseover(function () {
         transform:"translateX"+"("+tr+"px"+")"
     })
 })
+
+
+//服务栏 开
+var d=8;
+$('.service .service_list .one').hover(function () {
+    // $('.service .service_list .same').stop(true,true)//清空所有动画
+    var index = $(this).index();
+    console.log()
+    if(index==d &&index==3|| d==undefined){
+        console.log('不能重复index：'+index+'c:'+d);
+        return false
+    }
+    d=index;
+
+    if (index <= 3) {
+        //  话费那一行上移
+        $('.service .service_list li').find('.same').css({
+                transform:"translateY(-37px)"
+            })
+        //添加字体颜色
+        $(this).addClass('on').siblings().removeClass('on')
+        //下方的DIV上来
+        $('.service_down').stop(true).animate({top:25+'px'},100)
+        $('.service_down li').eq(index).show().siblings('li').hide();
+        //   关闭叉号回复原样
+        $('.service_down .cha').click(function () {
+            $('.service_down').stop(true).animate({top:210+'px'},100)
+            $('.service .service_list li').removeClass('on');
+            $('.service .service_list li').find('.same').css({transform:"translateY(0px)"})
+
+        })
+    }
+})
+
 
 
 
